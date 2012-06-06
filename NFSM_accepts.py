@@ -41,7 +41,7 @@ accepting2 = [2]
 # elsewhere). 
 #
 # Hint #2: (Base Case) If the current state is accepting, you can return
-# "" as an accepting string.  
+# "" as an accepting string.
 # 
 # Hint #3: (Recursion) If you have an outgoing edge labeled "a" that
 # goes to a state that accepts on the string "bc" (i.e., the recursive call
@@ -53,22 +53,21 @@ accepting2 = [2]
 # pairs) -- you'll have to write "edges[edge]" to get the destination list. 
 
 def nfsmaccepts(current, edges, accepting, visited): 
-        # write your code here 
+
     if current in accepting:
         return ''
 	
+    visited.append(current)
 
-    letter = string[0]
-    if (current, letter) in edges:
-    	states = edges[(current, letter)]
+    for edge in edges:
+      if edge[0] == current:
+        for state in edges[edge]:
+          if state not in visited:
+            x = nfsmaccepts(state, edges, accepting, visited)
+            if x != None:
+              return edge[1] + x
+    return None
 
-    	for state in states:
-	    	if nfsmsim(string[1:], state, edges, accepting):
-	    		return True
-
-    return False
-
-      
 
 # This problem includes some test cases to help you tell if you are on
 # the right track. You may want to make your own additional tests as well.
